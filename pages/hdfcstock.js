@@ -16,7 +16,7 @@ export default function TradePairs() {
     invalid: 0,
     rawData: []
   });
-  const [alert, setAlert] = useState({ show: false, message: '' });
+  const [alert, setAlert] = useState({ show: false, message: '',time:'' });
 
   useEffect(() => {
     let previousTradeIds = new Set();
@@ -44,12 +44,15 @@ export default function TradePairs() {
             if (trade.Position_Type && trade.Entry_Price) {
               setAlert({
                 show: true,
-                message: `New Entry: ${trade.symbol} ${trade.Position_Type} at ${trade.Entry_Price}`
+                message: `New Entry : ${trade.symbol} ${trade.Position_Type} at ${trade.Entry_Price} }`,
+                time:`${formatDateTime(trade.Date, trade.Time)}`
+                
               });
             } else if (trade.Exit_Position && trade.Exit_Price) {
               setAlert({
                 show: true,
-                message: `New Exit: ${trade.symbol} ${trade.Exit_Position} at ${trade.Exit_Price}`
+                message: `New Exit : ${trade.symbol} ${trade.Exit_Position} at ${trade.Exit_Price}`,
+                time:`${formatDateTime(trade.Date, trade.Time)}`
               });
             }
           });
@@ -109,7 +112,7 @@ export default function TradePairs() {
           // Auto-hide alert after 3 seconds
           if (newTrades.length > 0) {
             setTimeout(() => {
-              setAlert({ show: false, message: '' });
+              setAlert({ show: false, message: '' ,time:''});
             }, 1000000);
           }
         } catch (e) {
@@ -175,31 +178,42 @@ export default function TradePairs() {
           </div>
         )}
 {alert.show && (
-  <div className="fixed inset-0 flex items-center justify-center z-50">
-    <div className="bg-red-600 text-white px-8 py-6 rounded-xl  scale-125 relative">
-      <button
-        onClick={() => setAlert({ show: false, message: '' })}
-        className="absolute top-2 right-2 text-white hover:text-black-500 focus:outline-none transition-colors duration-200 bg-black-800 hover:bg-white-500 rounded-full p-1"
-      >
-        <svg
-          className="h-5 w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+  <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
+    <div className="relative flex items-center justify-center bg-rose-500 text-white px-10 py-6 rounded-2xl shadow-lg scale-100 transition-all duration-300">
+
+      {/* Close Button */}
+      <div className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center">
+        <button
+          onClick={() => setAlert({ show: false, message: '' })}
+          className="text-white bg-white/20 hover:bg-white/40 rounded-full p-1 transition-transform duration-300 transform origin-center hover:rotate-12"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-      <p className="text-lg font-semibold">{alert.message}</p>
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Alert Text */}
+      <div className="text-center space-y-2">
+        <p className="text-xl font-semibold tracking-wide">{alert.message}</p>
+        <p className="text-base font-medium text-white/90">{alert.time}</p>
+      </div>
+      
     </div>
   </div>
 )}
+
         {loading ? (
           <div className="flex flex-col items-center justify-center h-64 bg-white rounded-xl shadow-sm">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
@@ -245,10 +259,10 @@ export default function TradePairs() {
                 </div>
                 <div className="col-span-2">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    trade.positionType === 'Long' 
+                    trade.positionType === 'BUY' 
                       ? 'bg-green-100 text-green-800' 
                       : 'bg-red-100 text-red-800'
-                  }`}>2
+                  }`}>
                     {trade.positionType}
                   </span>
                 </div>
