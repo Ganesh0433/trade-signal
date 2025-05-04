@@ -44,7 +44,7 @@ export default function TradePairs() {
             if (trade.Position_Type && trade.Entry_Price) {
               setAlert({
                 show: true,
-                message: `New Entry : ${trade.symbol} ${trade.Position_Type} at ${trade.Entry_Price} }`,
+                message: `New Entry : ${trade.symbol} ${trade.Position_Type} at ${trade.Entry_Price}`,
                 time:`${formatDateTime(trade.Date, trade.Time)}`
                 
               });
