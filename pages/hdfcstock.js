@@ -1,19 +1,8 @@
 import { useEffect, useState } from 'react';
 import { initializeApp } from 'firebase/app';
+import { db } from '../firebase';
 import { getFirestore, collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 
-// Initialize Firebase (move to backend in production to secure apiKey)
-const firebaseConfig = {
-  apiKey: "AIzaSyAuExBvYAqE7P4viDDG0wEf_o_0TR80up0",
-  authDomain: "fir-trading-72b86.firebaseapp.com",
-  projectId: "fir-trading-72b86",
-  storageBucket: "fir-trading-72b86.firebasestorage.app",
-  messagingSenderId: "497854928189",
-  appId: "1:497854928189:web:ce9e0dab4bcdc771c02154"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 export default function TradePairs() {
   const [trades, setTrades] = useState([]);
