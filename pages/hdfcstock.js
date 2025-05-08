@@ -48,10 +48,10 @@ export default function TradePairs() {
                 time:`${formatDateTime(trade.Date, trade.Time)}`
                 
               });
-            } else if (trade.Exit_Position && trade.Exit_Price) {
+            } else if (trade.Position_Type && trade.Exit_Price) {
               setAlert({
                 show: true,
-                message: `New Exit : ${trade.symbol} ${trade.Exit_Position} at ${trade.Exit_Price}`,
+                message: `New Exit : ${trade.symbol} ${trade.Position_Type} at ${trade.Exit_Price}`,
                 time:`${formatDateTime(trade.Date, trade.Time)}`
               });
             }
@@ -75,11 +75,11 @@ export default function TradePairs() {
                 profitLoss: doc.Profit_Loss
               };
             }
-            else if (doc.Exit_Position && doc.Exit_Price) {
+            else if (doc.Position_Type && doc.Exit_Price) {
               return {
                 ...baseData,
                 type: 'exit',
-                positionType: doc.Exit_Position,
+                positionType: doc.Position_Type,
                 price: doc.Exit_Price,
                 profitLoss: doc.Profit_Loss
               };
