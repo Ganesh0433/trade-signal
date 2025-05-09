@@ -155,7 +155,7 @@ export default function TradePairs() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-              {trades.length > 0 ? trades[0].symbol : 'Trade'} Trade Signals Dashboard
+              {trades.length > 0 ? trades[0].symbol : 'HDFC'} Trade Signals Dashboard
             </h1>
             <p className="text-gray-600 mt-1">Real-time trading signals and positions</p>
           </div>
