@@ -40,7 +40,7 @@ export default function TradePairs() {
           previousTradeIds = currentTradeIds;
 
           // Show alert for new trades
-          newTrades.forEach(trade => {
+        newTrades.slice().reverse().forEach(trade => {
             if (trade.Position_Type && trade.Entry_Price) {
               setAlert({
                 show: true,
